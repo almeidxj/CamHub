@@ -1,6 +1,6 @@
 --[[
     CamHub
-    XENO FREECAM STUDIO v5.1  |  HUD v3 (Glass)
+    XENO FREECAM STUDIO v6.0  |  HUD v3 (Glass)
     Freecam cinematográfica + spectate + path + posições salvas + efeitos
 
     CONTROLES (com a freecam ativa)
@@ -22,7 +22,7 @@
     RightShift ...... esconder/mostrar o menu
 
     HUD v3: visual "glass" com gradientes, borda animada e cantos redondos.
-    Aba CONFIG com idioma e 4 temas (vermelho, preto/branco, neon, vidro).
+    Aba CONFIG com idioma e 6 temas (vermelho, monocromático, neon, vidro, oceano, floresta).
     Aba EFEITOS: controles de efeitos visuais da câmera.
     Idioma, tema, posição do menu, velocidade, sensibilidade, posições salvas
     (1-5) e pontos do path ficam salvos se você executar o script de novo.
@@ -424,6 +424,50 @@ K.themes = {
         selAlpha = 0.12,
         primaryAlpha = 0.35,
     },
+    ocean = {
+        bg = Color3.fromRGB(7, 22, 34),
+        bg2 = Color3.fromRGB(12, 50, 68),
+        header = Color3.fromRGB(8, 65, 88),
+        header2 = Color3.fromRGB(18, 120, 142),
+        panel = Color3.fromRGB(20, 44, 56),
+        line = Color3.fromRGB(48, 116, 132),
+        accent = Color3.fromRGB(54, 220, 205),
+        accent2 = Color3.fromRGB(66, 166, 255),
+        primary = Color3.fromRGB(23, 152, 176),
+        primaryText = Color3.fromRGB(255, 255, 255),
+        sel = Color3.fromRGB(72, 224, 209),
+        selText = Color3.fromRGB(6, 26, 34),
+        text = Color3.fromRGB(236, 250, 252),
+        sub = Color3.fromRGB(160, 203, 211),
+        good = Color3.fromRGB(94, 255, 194),
+        bad = Color3.fromRGB(255, 106, 126),
+        note = Color3.fromRGB(255, 220, 132),
+        track = Color3.fromRGB(30, 70, 84),
+        knobOn = Color3.fromRGB(255, 255, 255),
+        knobOff = Color3.fromRGB(175, 205, 214),
+    },
+    forest = {
+        bg = Color3.fromRGB(13, 24, 18),
+        bg2 = Color3.fromRGB(29, 48, 31),
+        header = Color3.fromRGB(30, 66, 40),
+        header2 = Color3.fromRGB(67, 112, 56),
+        panel = Color3.fromRGB(34, 48, 36),
+        line = Color3.fromRGB(82, 112, 78),
+        accent = Color3.fromRGB(142, 230, 116),
+        accent2 = Color3.fromRGB(230, 196, 104),
+        primary = Color3.fromRGB(78, 148, 68),
+        primaryText = Color3.fromRGB(255, 255, 255),
+        sel = Color3.fromRGB(150, 226, 119),
+        selText = Color3.fromRGB(18, 34, 20),
+        text = Color3.fromRGB(242, 248, 236),
+        sub = Color3.fromRGB(183, 201, 171),
+        good = Color3.fromRGB(131, 246, 155),
+        bad = Color3.fromRGB(255, 112, 110),
+        note = Color3.fromRGB(248, 218, 125),
+        track = Color3.fromRGB(50, 72, 48),
+        knobOn = Color3.fromRGB(255, 255, 255),
+        knobOff = Color3.fromRGB(195, 207, 185),
+    },
 }
 
 K.langs = {
@@ -440,7 +484,7 @@ K.langs = {
 K.str = {}
 
 K.str.pt = {
-    tab_camera = "CÂMERA", tab_spect = "SPECT", tab_path = "PATH", tab_fx = "FX", tab_cfg = "CONFIG",
+    tab_camera = "CÂMERA", tab_spect = "SPECT", tab_path = "PATH", tab_fx = "EFEITOS", tab_cfg = "CONFIG",
 
     cam_on = "ATIVAR FREECAM  [P]", cam_off = "DESATIVAR FREECAM  [P]",
     cam_tp = "TELEPORTAR BONECO PRA CÂMERA  [T]", cam_back = "CÂMERA VOLTA PRO BONECO  [G]",
@@ -483,7 +527,7 @@ K.str.pt = {
 }
 
 K.str.en = {
-    tab_camera = "CAMERA", tab_spect = "SPECT", tab_path = "PATH", tab_fx = "FX", tab_cfg = "CONFIG",
+    tab_camera = "CAMERA", tab_spect = "SPECT", tab_path = "PATH", tab_fx = "EFFECTS", tab_cfg = "CONFIG",
 
     cam_on = "ENABLE FREECAM  [P]", cam_off = "DISABLE FREECAM  [P]",
     cam_tp = "TELEPORT CHARACTER TO CAMERA  [T]", cam_back = "CAMERA BACK TO CHARACTER  [G]",
@@ -526,7 +570,7 @@ K.str.en = {
 }
 
 K.str.ru = {
-    tab_camera = "КАМЕРА", tab_spect = "НАБЛ.", tab_path = "ПУТЬ", tab_fx = "FX", tab_cfg = "НАСТР.",
+    tab_camera = "КАМЕРА", tab_spect = "НАБЛ.", tab_path = "ПУТЬ", tab_fx = "ЭФФЕКТЫ", tab_cfg = "НАСТР.",
 
     cam_on = "ВКЛЮЧИТЬ ФРИКАМ  [P]", cam_off = "ВЫКЛЮЧИТЬ ФРИКАМ  [P]",
     cam_tp = "ТЕЛЕПОРТ ПЕРСОНАЖА К КАМЕРЕ  [T]", cam_back = "КАМЕРА К ПЕРСОНАЖУ  [G]",
@@ -569,7 +613,7 @@ K.str.ru = {
 }
 
 K.str.es = {
-    tab_camera = "CÁMARA", tab_spect = "SPECT", tab_path = "RUTA", tab_fx = "FX", tab_cfg = "CONFIG",
+    tab_camera = "CÁMARA", tab_spect = "SPECT", tab_path = "RUTA", tab_fx = "EFECTOS", tab_cfg = "CONFIG",
 
     cam_on = "ACTIVAR FREECAM  [P]", cam_off = "DESACTIVAR FREECAM  [P]",
     cam_tp = "TELEPORTAR PERSONAJE A LA CÁMARA  [T]", cam_back = "CÁMARA VUELVE AL PERSONAJE  [G]",
@@ -612,7 +656,7 @@ K.str.es = {
 }
 
 K.str.fr = {
-    tab_camera = "CAMÉRA", tab_spect = "SPECT", tab_path = "TRAJET", tab_fx = "FX", tab_cfg = "CONFIG",
+    tab_camera = "CAMÉRA", tab_spect = "SPECT", tab_path = "TRAJET", tab_fx = "EFFETS", tab_cfg = "CONFIG",
 
     cam_on = "ACTIVER LA FREECAM  [P]", cam_off = "DÉSACTIVER LA FREECAM  [P]",
     cam_tp = "TÉLÉPORTER LE PERSO À LA CAMÉRA  [T]", cam_back = "CAMÉRA VERS LE PERSO  [G]",
@@ -655,7 +699,7 @@ K.str.fr = {
 }
 
 K.str.de = {
-    tab_camera = "KAMERA", tab_spect = "SPEKT.", tab_path = "PFAD", tab_fx = "FX", tab_cfg = "CONFIG",
+    tab_camera = "KAMERA", tab_spect = "SPEKT.", tab_path = "PFAD", tab_fx = "EFFEKTE", tab_cfg = "CONFIG",
 
     cam_on = "FREECAM AKTIVIEREN  [P]", cam_off = "FREECAM DEAKTIVIEREN  [P]",
     cam_tp = "FIGUR ZUR KAMERA TELEPORTIEREN  [T]", cam_back = "KAMERA ZURÜCK ZUR FIGUR  [G]",
@@ -741,7 +785,7 @@ K.str.zh = {
 }
 
 K.str.ja = {
-    tab_camera = "カメラ", tab_spect = "観戦", tab_path = "パス", tab_fx = "FX", tab_cfg = "設定",
+    tab_camera = "カメラ", tab_spect = "観戦", tab_path = "パス", tab_fx = "エフェクト", tab_cfg = "設定",
 
     cam_on = "フリーカメラ ON  [P]", cam_off = "フリーカメラ OFF  [P]",
     cam_tp = "キャラをカメラへテレポート  [T]", cam_back = "カメラをキャラに戻す  [G]",
@@ -783,17 +827,17 @@ K.str.ja = {
     n_tp = "テレポート完了!", n_failed = "失敗",
 }
 
--- textos novos da v5.0 (adicionados aos pacotes de idioma)
+-- textos extras e nomes de temas (adicionados aos pacotes de idioma)
 do
     local extra = {
-        pt = { s_sens = "Sensibilidade do mouse", s_smooth = "Suavidade da câmera", th_neon = "NEON (CIANO / ROXO)" },
-        en = { s_sens = "Mouse sensitivity", s_smooth = "Camera smoothness", th_neon = "NEON (CYAN / PURPLE)" },
-        ru = { s_sens = "Чувствительность мыши", s_smooth = "Плавность камеры", th_neon = "НЕОН (ЦИАН / ФИОЛЕТОВЫЙ)" },
-        es = { s_sens = "Sensibilidad del ratón", s_smooth = "Suavidad de la cámara", th_neon = "NEÓN (CIAN / MORADO)" },
-        fr = { s_sens = "Sensibilité de la souris", s_smooth = "Fluidité de la caméra", th_neon = "NÉON (CYAN / VIOLET)" },
-        de = { s_sens = "Mausempfindlichkeit", s_smooth = "Kameraglättung", th_neon = "NEON (CYAN / LILA)" },
-        zh = { s_sens = "鼠标灵敏度", s_smooth = "镜头平滑度", th_neon = "霓虹 (青 / 紫)" },
-        ja = { s_sens = "マウス感度", s_smooth = "カメラのなめらかさ", th_neon = "ネオン (シアン / 紫)" },
+        pt = { s_sens = "Sensibilidade do mouse", s_smooth = "Suavidade da câmera", s_rays = "Raios de sol", s_vignette = "Vinheta", th_neon = "NEON (CIANO / ROXO)", th_ocean = "OCEANO", th_forest = "FLORESTA" },
+        en = { s_sens = "Mouse sensitivity", s_smooth = "Camera smoothness", s_rays = "Sun rays", s_vignette = "Vignette", th_neon = "NEON (CYAN / PURPLE)", th_ocean = "OCEAN", th_forest = "FOREST" },
+        ru = { s_sens = "Чувствительность мыши", s_smooth = "Плавность камеры", s_rays = "Солнечные лучи", s_vignette = "Виньетка", th_neon = "НЕОН (ЦИАН / ФИОЛЕТОВЫЙ)", th_ocean = "ОКЕАН", th_forest = "ЛЕС" },
+        es = { s_sens = "Sensibilidad del ratón", s_smooth = "Suavidad de la cámara", s_rays = "Rayos de sol", s_vignette = "Viñeta", th_neon = "NEÓN (CIAN / MORADO)", th_ocean = "OCÉANO", th_forest = "BOSQUE" },
+        fr = { s_sens = "Sensibilité de la souris", s_smooth = "Fluidité de la caméra", s_rays = "Rayons du soleil", s_vignette = "Vignette", th_neon = "NÉON (CYAN / VIOLET)", th_ocean = "OCÉAN", th_forest = "FORÊT" },
+        de = { s_sens = "Mausempfindlichkeit", s_smooth = "Kameraglättung", s_rays = "Sonnenstrahlen", s_vignette = "Vignette", th_neon = "NEON (CYAN / LILA)", th_ocean = "OZEAN", th_forest = "WALD" },
+        zh = { s_sens = "镜头灵敏度", s_smooth = "镜头平滑度", s_rays = "阳光光束", s_vignette = "暗角", th_neon = "霓虹 (青 / 紫)", th_ocean = "海洋", th_forest = "森林" },
+        ja = { s_sens = "マウス感度", s_smooth = "カメラのなめらかさ", s_rays = "太陽光線", s_vignette = "ビネット", th_neon = "ネオン (シアン / 紫)", th_ocean = "オーシャン", th_forest = "フォレスト" },
     }
 
     for code, entries in pairs(extra) do
@@ -803,7 +847,7 @@ do
     end
 end
 
--- textos da v5.1 (aba TROLL e tema vidro)
+-- textos da aba EFEITOS e do tema vidro
 do
     local extra2 = {
         pt = { tab_troll = "EFEITOS", tr_hint = "Efeitos visuais locais da câmera: aparecem apenas na sua tela.", sec_troll = "EFEITOS DE CÂMERA", t_spin = "Câmera giratória", t_drunk = "Câmera bêbada", t_quake = "Terremoto", t_vertigo = "Vertigem (zoom maluco)", t_rainbow = "Cores arco-íris", t_lag = "Lag falso", t_stalk = "Perseguidor (olha pro mais perto)", s_tint = "Intensidade", tr_scare = "SUSTO!", tr_stop = "DESATIVAR TODOS OS EFEITOS", th_glass = "VIDRO (TRANSLÚCIDO)" },
@@ -1021,6 +1065,62 @@ do
         barBottom.Visible = scale > 0
     end
 
+    local vignetteEdges = {}
+    local lastVignetteStrength = -1
+
+    local function addVignetteEdge(key, size, position, anchorPoint, rotation, reverse)
+        local frame = mk("Frame", {
+            Size = size,
+            Position = position,
+            AnchorPoint = anchorPoint,
+            BackgroundColor3 = Color3.new(0, 0, 0),
+            BorderSizePixel = 0,
+            Visible = false,
+            ZIndex = 2,
+        }, fxGui)
+
+        local gradient = mk("UIGradient", {
+            Rotation = rotation,
+            Color = ColorSequence.new(Color3.new(0, 0, 0)),
+            Transparency = NumberSequence.new(1),
+        }, frame)
+
+        vignetteEdges[key] = { frame = frame, gradient = gradient, reverse = reverse }
+    end
+
+    addVignetteEdge("top", UDim2.new(1, 0, 0.2, 0), UDim2.new(), Vector2.zero, 90, false)
+    addVignetteEdge("bottom", UDim2.new(1, 0, 0.2, 0), UDim2.fromScale(0, 1), Vector2.new(0, 1), 90, true)
+    addVignetteEdge("left", UDim2.new(0.18, 0, 1, 0), UDim2.new(), Vector2.zero, 0, false)
+    addVignetteEdge("right", UDim2.new(0.18, 0, 1, 0), UDim2.fromScale(1, 0), Vector2.new(1, 0), 0, true)
+
+    function ui.setVignette(amount)
+        local strength = math.clamp(amount, 0, 1)
+        if math.abs(strength - lastVignetteStrength) < 0.001 then
+            return
+        end
+        lastVignetteStrength = strength
+
+        local edge = 1 - strength * 0.82
+        local middle = 1 - strength * 0.45
+
+        for _, item in pairs(vignetteEdges) do
+            item.frame.Visible = strength > 0
+            if item.reverse then
+                item.gradient.Transparency = NumberSequence.new({
+                    NumberSequenceKeypoint.new(0, 1),
+                    NumberSequenceKeypoint.new(0.45, middle),
+                    NumberSequenceKeypoint.new(1, edge),
+                })
+            else
+                item.gradient.Transparency = NumberSequence.new({
+                    NumberSequenceKeypoint.new(0, edge),
+                    NumberSequenceKeypoint.new(0.55, middle),
+                    NumberSequenceKeypoint.new(1, 1),
+                })
+            end
+        end
+    end
+
     -- aviso flutuante (aparece mesmo com o menu escondido)
     local toast = mk("Frame", {
         AnchorPoint = Vector2.new(0.5, 1),
@@ -1126,6 +1226,14 @@ do
 
     local scareToken = 0
 
+    function ui.clearScare()
+        scareToken += 1
+        scareFrame.Visible = false
+        scareFrame.BackgroundTransparency = 1
+        scareLabel.TextTransparency = 1
+        scareStroke.Transparency = 1
+    end
+
     function ui.scare()
         scareToken += 1
         local token = scareToken
@@ -1173,7 +1281,7 @@ do
             for k, v in pairs(props) do
                 effect[k] = v
             end
-            effect.Parent = Lighting
+            effect.Parent = workspace.CurrentCamera or Lighting
             return effect
         end)
 
@@ -1193,6 +1301,95 @@ do
         InFocusRadius = 15,
         Enabled = false,
     })
+    createEffect("rays", "SunRaysEffect", {
+        Name = "CAMHUB_SunRays",
+        Intensity = 0,
+        Spread = 0.5,
+        Enabled = false,
+    })
+end
+
+local function attachEffectsToCurrentCamera()
+    local parent = workspace.CurrentCamera or Lighting
+    for _, effect in pairs(fx) do
+        pcall(function()
+            effect.Parent = parent
+        end)
+    end
+end
+
+table.insert(connections, workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(attachEffectsToCurrentCamera))
+
+local function applyCameraEffects(baseCF, baseFOV, dt)
+    local finalCF = baseCF
+    local fovNow = baseFOV
+    local now = os.clock()
+    local power = math.clamp(tonumber(troll.intensity) or 1, 0.2, 2)
+
+    if troll.spin then
+        troll.angle = (troll.angle + math.rad(70) * power * dt) % (math.pi * 2)
+        finalCF = finalCF * CFrame.Angles(0, 0, troll.angle)
+    end
+
+    if troll.drunk then
+        finalCF = finalCF * CFrame.Angles(
+            math.sin(now * 1.3) * 0.06 * power,
+            math.sin(now * 0.9) * 0.12 * power,
+            math.sin(now * 0.7) * 0.18 * power
+        )
+        fovNow += math.sin(now * 1.1) * 6 * power
+    end
+
+    if troll.vertigo then
+        fovNow += math.sin(now * 1.2) * 24 * power
+    end
+
+    if troll.scareT > 0 then
+        troll.scareT = math.max(troll.scareT - dt, 0)
+        fovNow -= troll.scareT * 28
+    end
+
+    local shakeNow = shakeAmount
+    if troll.quake then
+        shakeNow = math.max(shakeNow, 1.3 * power)
+    end
+    if troll.scareT > 0 then
+        shakeNow = math.max(shakeNow, 2.2)
+    end
+
+    if shakeNow > 0 then
+        local offset = Vector3.new(
+            math.noise(now * 7, 0, 11),
+            math.noise(0, now * 7, 23),
+            math.noise(now * 5, now * 5, 37)
+        ) * 0.4 * shakeNow
+
+        local tilt = CFrame.Angles(
+            math.noise(now * 6, 5, 0) * 0.05 * shakeNow,
+            math.noise(7, now * 6, 0) * 0.05 * shakeNow,
+            math.noise(0, 9, now * 6) * 0.04 * shakeNow
+        )
+        finalCF = finalCF * CFrame.new(offset) * tilt
+    end
+
+    if troll.lag then
+        troll.lagTimer += dt
+        local interval = 0.16 / power
+        if not troll.lagCF or troll.lagTimer >= interval then
+            troll.lagTimer = 0
+            troll.lagCF = finalCF
+        end
+        finalCF = troll.lagCF
+    end
+
+    if troll.rainbow and fx.color then
+        pcall(function()
+            fx.color.Enabled = true
+            fx.color.TintColor = Color3.fromHSV((now * 0.12 * power) % 1, 0.5, 1)
+        end)
+    end
+
+    return finalCF, math.clamp(fovNow, 8, 110)
 end
 
 ---------------------------------------------------------------------
@@ -2062,11 +2259,11 @@ do
     local pageSpect = newPage()
     local pagePath = newPage()
     local pageFx = newPage()
-    local pageTroll = newPage()
+    local pageTroll = pageFx
     local pageCfg = newPage()
 
     do
-        local tabKeys = { "tab_camera", "tab_spect", "tab_path", "tab_fx", "tab_troll", "tab_cfg" }
+        local tabKeys = { "tab_camera", "tab_spect", "tab_path", "tab_fx", "tab_cfg" }
 
         for index, key in ipairs(tabKeys) do
             local obj = buildButton(
@@ -2337,6 +2534,7 @@ do
 
         local function applyDof()
             setFx("dof", "FarIntensity", dofState.intensity)
+            setFx("dof", "NearIntensity", dofState.intensity)
             setFx("dof", "FocusDistance", dofState.distance)
             setFx("dof", "Enabled", dofState.intensity > 0)
         end
@@ -2369,6 +2567,15 @@ do
 
         ui.shakeSlider = newSlider(pageFx, "s_shake", 0, 1, 0, 0.05, "%.2f", function(value)
             shakeAmount = value
+        end)
+
+        ui.raysSlider = newSlider(pageFx, "s_rays", 0, 0.25, 0, 0.01, "%.2f", function(value)
+            setFx("rays", "Intensity", value)
+            setFx("rays", "Enabled", value > 0)
+        end)
+
+        ui.vignetteSlider = newSlider(pageFx, "s_vignette", 0, 1, 0, 0.05, "%.2f", function(value)
+            ui.setVignette(value)
         end)
 
         newSection(pageFx, "sec_color")
@@ -2421,15 +2628,28 @@ do
             applyColorPreset(colorPresets[index])
         end, 9)
 
-        newButton(pageFx, "fx_reset", 30, function()
+        function ui.resetAllEffects()
+            stopTrolls()
+            troll.scareT = 0
+            troll.angle = 0
+            troll.lagTimer = 0
+            troll.lagCF = nil
+
             ui.barsSlider.set(0)
             ui.blurSlider.set(0)
             ui.bloomSlider.set(0)
             ui.dofSlider.set(0)
             ui.dofDistSlider.set(40)
             ui.shakeSlider.set(0)
+            ui.raysSlider.set(0)
+            ui.vignetteSlider.set(0)
+            ui.trollSlider.set(1)
             applyColorPreset(colorPresets[1])
-        end, true)
+
+            if ui.clearScare then
+                ui.clearScare()
+            end
+        end
     end
 
     -----------------------------------------------------------------
@@ -2454,9 +2674,11 @@ do
         ui.scare()
     end, true)
 
-    newButton(pageTroll, "tr_stop", 30, function()
-        stopTrolls()
-    end)
+    newButton(pageTroll, "fx_reset", 34, function()
+        if ui.resetAllEffects then
+            ui.resetAllEffects()
+        end
+    end, true)
 
     -----------------------------------------------------------------
     -- ABA: CONFIG (idioma e tema)
@@ -2510,6 +2732,8 @@ do
         { name = "mono", key = "th_mono" },
         { name = "neon", key = "th_neon" },
         { name = "glass", key = "th_glass" },
+        { name = "ocean", key = "th_ocean" },
+        { name = "forest", key = "th_forest" },
     }) do
         local obj = newButton(pageCfg, entry.key, 32, function()
             K.setTheme(entry.name)
@@ -2533,7 +2757,7 @@ do
 
     do
         local about = newLabel(pageCfg, nil, "sub", 10)
-        about.Text = "CamHub // XENO FREECAM STUDIO v5.1\nHUD v3 (Glass)"
+        about.Text = "CamHub // XENO FREECAM STUDIO v6.0\nHUD v3 (Glass)"
     end
 
     -----------------------------------------------------------------
@@ -3383,6 +3607,8 @@ function setFreecam(enabled)
         lastCF = camera.CFrame
 
         active = true
+        troll.lagCF = nil
+        troll.lagTimer = 0
 
         hideGameHUD()
         bindInput()
@@ -3399,6 +3625,8 @@ function setFreecam(enabled)
     else
 
         active = false
+        troll.lagCF = nil
+        troll.lagTimer = 0
         mode = "free"
         trans = nil
         specTarget = nil
@@ -3553,76 +3781,10 @@ RunService:BindToRenderStep(NORMAL_FX_BIND, Enum.RenderPriority.Camera.Value + 1
         baseCF = baseCF * CFrame.Angles(0, 0, targetRoll)
     end
 
-    local finalCF = baseCF
-    local fovNow = normalCurrentFOV
-    local now = os.clock()
-    local power = math.max(troll.intensity, 0.05)
-
-    if troll.spin then
-        troll.angle = (troll.angle + math.rad(70) * power * dt) % (math.pi * 2)
-        finalCF = finalCF * CFrame.Angles(0, 0, troll.angle)
-    end
-
-    if troll.drunk then
-        finalCF = finalCF * CFrame.Angles(
-            math.sin(now * 1.3) * 0.06 * power,
-            math.sin(now * 0.9) * 0.12 * power,
-            math.sin(now * 0.7) * 0.18 * power
-        )
-        fovNow += math.sin(now * 1.1) * 6 * power
-    end
-
-    if troll.vertigo then
-        fovNow += math.sin(now * 1.2) * 24 * power
-    end
-
-    if troll.scareT > 0 then
-        troll.scareT = math.max(troll.scareT - dt, 0)
-        fovNow -= troll.scareT * 28
-    end
-
-    local shakeNow = shakeAmount
-    if troll.quake then
-        shakeNow = math.max(shakeNow, 1.3 * power)
-    end
-    if troll.scareT > 0 then
-        shakeNow = math.max(shakeNow, 2.2)
-    end
-
-    if shakeNow > 0 then
-        local a = shakeNow
-        local offset = Vector3.new(
-            math.noise(now * 7, 0, 11),
-            math.noise(0, now * 7, 23),
-            math.noise(now * 5, now * 5, 37)
-        ) * 0.4 * a
-        local tilt = CFrame.Angles(
-            math.noise(now * 6, 5, 0) * 0.05 * a,
-            math.noise(7, now * 6, 0) * 0.05 * a,
-            math.noise(0, 9, now * 6) * 0.04 * a
-        )
-        finalCF = finalCF * CFrame.new(offset) * tilt
-    end
-
-    -- Simula atraso visual da câmera sem alterar a física ou o personagem.
-    if troll.lag then
-        troll.lagTimer += dt
-        if not troll.lagCF or troll.lagTimer >= 0.16 / power then
-            troll.lagTimer = 0
-            troll.lagCF = finalCF
-        end
-        finalCF = troll.lagCF
-    end
-
-    if troll.rainbow and fx.color then
-        pcall(function()
-            fx.color.Enabled = true
-            fx.color.TintColor = Color3.fromHSV((now * 0.12 * power) % 1, 0.5, 1)
-        end)
-    end
+    local finalCF, fovNow = applyCameraEffects(baseCF, normalCurrentFOV, dt)
 
     normalCamera.CFrame = finalCF
-    normalCamera.FieldOfView = math.clamp(fovNow, 8, 110)
+    normalCamera.FieldOfView = fovNow
     normalFovOffset = normalCamera.FieldOfView - normalCurrentFOV
 
     if hideSelf then
@@ -3830,85 +3992,9 @@ table.insert(connections, RunService.RenderStepped:Connect(function(dt)
         currentFOV = currentFOV + (targetFOV - currentFOV) * zoomAlpha
     end
 
-    -- tremida + trollagens de câmera (só visual, não altera o estado)
-    local finalCF = baseCF
-    local fovNow = currentFOV
-    local now = os.clock()
-    local power = troll.intensity
-
-    if troll.spin then
-        troll.angle = (troll.angle + math.rad(70) * power * dt) % (math.pi * 2)
-        finalCF = finalCF * CFrame.Angles(0, 0, troll.angle)
-    end
-
-    if troll.drunk then
-        finalCF = finalCF * CFrame.Angles(
-            math.sin(now * 1.3) * 0.06 * power,
-            math.sin(now * 0.9) * 0.12 * power,
-            math.sin(now * 0.7) * 0.18 * power
-        )
-
-        fovNow += math.sin(now * 1.1) * 6 * power
-    end
-
-    if troll.vertigo then
-        fovNow += math.sin(now * 1.2) * 24 * power
-    end
-
-    if troll.scareT > 0 then
-        troll.scareT = math.max(troll.scareT - dt, 0)
-        fovNow -= troll.scareT * 28
-    end
-
-    camera.FieldOfView = math.clamp(fovNow, 8, 110)
-
-    local shakeNow = shakeAmount
-
-    if troll.quake then
-        shakeNow = math.max(shakeNow, 1.3 * power)
-    end
-
-    if troll.scareT > 0 then
-        shakeNow = math.max(shakeNow, 2.2)
-    end
-
-    if shakeNow > 0 then
-        local a = shakeNow
-
-        local offset = Vector3.new(
-            math.noise(now * 7, 0, 11),
-            math.noise(0, now * 7, 23),
-            math.noise(now * 5, now * 5, 37)
-        ) * 0.4 * a
-
-        local tilt = CFrame.Angles(
-            math.noise(now * 6, 5, 0) * 0.05 * a,
-            math.noise(7, now * 6, 0) * 0.05 * a,
-            math.noise(0, 9, now * 6) * 0.04 * a
-        )
-
-        finalCF = finalCF * CFrame.new(offset) * tilt
-    end
-
-    -- lag falso: a câmera só atualiza ~6 vezes por segundo
-    if troll.lag then
-        troll.lagTimer += dt
-
-        if not troll.lagCF or troll.lagTimer >= 0.16 / power then
-            troll.lagTimer = 0
-            troll.lagCF = finalCF
-        end
-
-        finalCF = troll.lagCF
-    end
-
-    -- cores arco-íris (usa o efeito de cor da própria tela)
-    if troll.rainbow and fx.color then
-        pcall(function()
-            fx.color.Enabled = true
-            fx.color.TintColor = Color3.fromHSV((now * 0.12 * power) % 1, 0.5, 1)
-        end)
-    end
+    -- Aplica a mesma cadeia de efeitos usada pela câmera normal.
+    local finalCF, fovNow = applyCameraEffects(baseCF, currentFOV, dt)
+    camera.FieldOfView = fovNow
 
     camera.CameraType = Enum.CameraType.Scriptable
     camera.CFrame = finalCF
@@ -4005,4 +4091,4 @@ refreshSlotButtons()
 ui.showTab(1)
 refreshStatus()
 
-print("[CamHub] XENO FREECAM STUDIO v4.0 CARREGADA")
+print("[CamHub] XENO FREECAM STUDIO v6.0 CARREGADA")
