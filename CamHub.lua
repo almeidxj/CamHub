@@ -1,7 +1,10 @@
 --[[
     CamHub
-    XENO FREECAM STUDIO v6.2  |  HUD v3 (Glass)
+    XENO FREECAM STUDIO v6.3  |  HUD v3 (Glass)
     Freecam cinematográfica + spectate + path + posições salvas + efeitos
+
+    NOVIDADES v6.3
+    - Corrigido: mouse travado no centro da tela (como shiftlock) depois de teleportar.
 
     NOVIDADES v6.2
     - Corrigido: a HUD do jogo voltava a aparecer depois de respawnar com a freecam ligada.
@@ -2790,7 +2793,7 @@ do
 
     do
         local about = newLabel(pageCfg, nil, "sub", 10)
-        about.Text = "CamHub // XENO FREECAM STUDIO v6.2\nHUD v3 (Glass)"
+        about.Text = "CamHub // XENO FREECAM STUDIO v6.3\nHUD v3 (Glass)"
     end
 
     -----------------------------------------------------------------
@@ -3092,6 +3095,43 @@ local function unbindInput()
     end)
 end
 
+-- CORREÇÃO v6.3: o jogo (shiftlock) pode travar o mouse no centro,
+-- principalmente depois de teleportar. Este vigia roda por último em cada
+-- frame e devolve o mouse livre, a não ser que o RMB esteja sendo segurado.
+local MOUSE_FIX_BIND = "CAMHUB_MouseFix"
+
+local function unbindMouseFix()
+    pcall(function()
+        RunService:UnbindFromRenderStep(MOUSE_FIX_BIND)
+    end)
+end
+
+local function bindMouseFix()
+    unbindMouseFix()
+
+    pcall(function()
+        RunService:BindToRenderStep(MOUSE_FIX_BIND, Enum.RenderPriority.Last.Value, function()
+            if not active then return end
+
+            if lookHeld then
+                if UIS.MouseBehavior ~= Enum.MouseBehavior.LockCurrentPosition then
+                    UIS.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
+                end
+                if UIS.MouseIconEnabled then
+                    UIS.MouseIconEnabled = false
+                end
+            else
+                if UIS.MouseBehavior ~= Enum.MouseBehavior.Default then
+                    UIS.MouseBehavior = Enum.MouseBehavior.Default
+                end
+                if not UIS.MouseIconEnabled then
+                    UIS.MouseIconEnabled = true
+                end
+            end
+        end)
+    end)
+end
+
 ---------------------------------------------------------------------
 -- STATUS / NOTIFICAÇÕES
 ---------------------------------------------------------------------
@@ -3201,8 +3241,9 @@ end))
 local function releaseLook()
     if lookHeld then
         lookHeld = false
-        UIS.MouseBehavior = oldMouseBehavior or Enum.MouseBehavior.Default
-        UIS.MouseIconEnabled = oldMouseIconEnabled ~= false
+        -- CORREÇÃO v6.3: sempre solta o mouse (nunca devolve LockCenter/shiftlock)
+        UIS.MouseBehavior = Enum.MouseBehavior.Default
+        UIS.MouseIconEnabled = true
     end
 end
 
@@ -3725,6 +3766,7 @@ function setFreecam(enabled)
 
         hideGameHUD()
         bindInput()
+        bindMouseFix()
 
         if hideSelf then
             applyHideSelf(true)
@@ -3749,6 +3791,7 @@ function setFreecam(enabled)
         releaseLook()
         restoreGameHUD()
         unbindInput()
+        unbindMouseFix()
         applyHideSelf(hideSelf)
 
         camera.CameraType = oldCameraType or Enum.CameraType.Custom
@@ -3772,7 +3815,13 @@ function setFreecam(enabled)
             end
         end
 
-        UIS.MouseBehavior = oldMouseBehavior or Enum.MouseBehavior.Default
+        -- se o mouse estava travado ao ligar, deixa livre (o jogo reaplica o
+        -- shiftlock sozinho se ele estiver ativo)
+        if oldMouseBehavior == Enum.MouseBehavior.LockCurrentPosition then
+            UIS.MouseBehavior = Enum.MouseBehavior.Default
+        else
+            UIS.MouseBehavior = oldMouseBehavior or Enum.MouseBehavior.Default
+        end
         UIS.MouseIconEnabled = oldMouseIconEnabled ~= false
 
         velocity = Vector3.zero
@@ -4173,6 +4222,7 @@ end))
 env.CAMHUB_FREECAM_CLEANUP = function()
 
     RunService:UnbindFromRenderStep(NORMAL_FX_BIND)
+    unbindMouseFix()
 
     if active then
         setFreecam(false)
@@ -4220,4 +4270,4 @@ refreshSlotButtons()
 ui.showTab(1)
 refreshStatus()
 
-print("[CamHub] XENO FREECAM STUDIO v6.2 CARREGADA")
+print("[CamHub] XENO FREECAM STUDIO v6.3 CARREGADA")
