@@ -1,7 +1,11 @@
 --[[
     CamHub
-    XENO FREECAM STUDIO v6.4  |  HUD v3 (Glass)
+    XENO FREECAM STUDIO v6.5  |  HUD v3 (Glass)
     Freecam cinematográfica + spectate + path + posições salvas + efeitos
+
+    NOVIDADES v6.5
+    - Corrigido: ao sair da freecam com Shift Lock ativo, o mouse não fica preso no centro.
+    - O cursor volta ao modo livre e visível ao desligar a freecam ou limpar o script.
 
     NOVIDADES v6.4
     - Adicionado controle visível de VELOCIDADE DO PERSONAGEM na aba CÂMERA.
@@ -3889,14 +3893,10 @@ function setFreecam(enabled)
             end
         end
 
-        -- se o mouse estava travado ao ligar, deixa livre (o jogo reaplica o
-        -- shiftlock sozinho se ele estiver ativo)
-        if oldMouseBehavior == Enum.MouseBehavior.LockCurrentPosition then
-            UIS.MouseBehavior = Enum.MouseBehavior.Default
-        else
-            UIS.MouseBehavior = oldMouseBehavior or Enum.MouseBehavior.Default
-        end
-        UIS.MouseIconEnabled = oldMouseIconEnabled ~= false
+        -- Ao sair da freecam, nunca restaura LockCenter/LockCurrentPosition.
+        -- Isso evita que o Shift Lock deixe o cursor preso no centro após a câmera.
+        UIS.MouseBehavior = Enum.MouseBehavior.Default
+        UIS.MouseIconEnabled = true
 
         velocity = Vector3.zero
     end
@@ -4304,6 +4304,10 @@ env.CAMHUB_FREECAM_CLEANUP = function()
         restoreGameHUD()
         unbindInput()
     end
+
+    -- Segurança adicional: uma limpeza/reexecução também libera o cursor.
+    UIS.MouseBehavior = Enum.MouseBehavior.Default
+    UIS.MouseIconEnabled = true
 
     hideSelf = false
     applyHideSelf(false)
