@@ -1,11 +1,12 @@
 --[[
     CamHub
-    XENO FREECAM STUDIO v6.7  |  HUD v3 (Glass)
+    XENO FREECAM STUDIO v6.8  |  HUD v3 (Glass)
     Freecam cinematográfica + spectate + path + posições salvas + efeitos + aimbot
 
-    NOVIDADES v6.7
-    - Numpad Enter ativa/desativa o aimbot e sincroniza o botão no HUD.
-    - Atalho também funciona com a freecam desligada; não interfere em caixas de texto.
+    NOVIDADES v6.8
+    - Tecla Y ativa/desativa o aimbot e sincroniza o botão no HUD.
+    - Atalho anterior (Numpad Enter) substituído por Y.
+    - O atalho funciona com a freecam desligada e não interfere em caixas de texto.
 
     NOVIDADES v6.6
     - Nova categoria AIMBOT com assistência de mira na câmera normal.
@@ -46,7 +47,7 @@
 
     SEMPRE
     P ............... ligar/desligar freecam
-    NUMPAD ENTER .... ativar/desativar aimbot
+    Y ............... ativar/desativar aimbot
     RightShift ...... esconder/mostrar o menu
 
     HUD v3: visual "glass" com gradientes, borda animada e cantos redondos.
@@ -915,7 +916,7 @@ end
 
 -- textos da categoria AIMBOT (idiomas sem tradução específica usam inglês)
 K.str.pt.tab_aim = "AIMBOT"
-K.str.pt.aim_hint = "NUMPAD ENTER ativa/desativa o aimbot. Se a opção RMB estiver ligada, segure o botão direito para mirar."
+K.str.pt.aim_hint = "Y ativa/desativa o aimbot. Se a opção RMB estiver ligada, segure o botão direito para mirar."
 K.str.pt.sec_aim_settings = "CONFIGURAÇÕES DE MIRA"
 K.str.pt.t_aim_enabled = "Ativar aimbot"
 K.str.pt.t_aim_hold = "Exigir botão direito para mirar"
@@ -929,7 +930,7 @@ K.str.pt.aim_head = "CABEÇA"
 K.str.pt.aim_body = "CORPO"
 
 K.str.en.tab_aim = "AIMBOT"
-K.str.en.aim_hint = "NUMPAD ENTER toggles the aimbot. If RMB mode is enabled, hold right mouse button to aim."
+K.str.en.aim_hint = "Y toggles the aimbot. If RMB mode is enabled, hold right mouse button to aim."
 K.str.en.sec_aim_settings = "AIM SETTINGS"
 K.str.en.t_aim_enabled = "Enable aimbot"
 K.str.en.t_aim_hold = "Hold right mouse button to aim"
@@ -3001,7 +3002,7 @@ do
 
     do
         local about = newLabel(pageCfg, nil, "sub", 10)
-        about.Text = "CamHub // XENO FREECAM STUDIO v6.7\nHUD v3 (Glass)"
+        about.Text = "CamHub // XENO FREECAM STUDIO v6.8\nHUD v3 (Glass)"
     end
 
     -----------------------------------------------------------------
@@ -4068,8 +4069,8 @@ table.insert(connections, UIS.InputBegan:Connect(function(input, processed)
 
     if UIS:GetFocusedTextBox() then return end
 
-    -- NUMPAD ENTER: ativa/desativa o aimbot e mantém o toggle do HUD sincronizado.
-    if input.KeyCode == Enum.KeyCode.KeypadEnter then
+    -- Y: ativa/desativa o aimbot e mantém o toggle do HUD sincronizado.
+    if input.KeyCode == Enum.KeyCode.Y then
         if ui.aimEnabledToggle then
             ui.aimEnabledToggle.set(not aimbot.enabled)
         end
@@ -4607,4 +4608,4 @@ refreshSlotButtons()
 ui.showTab(1)
 refreshStatus()
 
-print("[CamHub] XENO FREECAM STUDIO v6.7 CARREGADA")
+print("[CamHub] XENO FREECAM STUDIO v6.8 CARREGADA")
