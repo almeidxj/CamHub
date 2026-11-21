@@ -1,6 +1,6 @@
 --[[
     CamHub
-    XENO FREECAM STUDIO v6.5  |  HUD v3 (Glass)
+    XENO FREECAM STUDIO v6.5.1  |  HUD v3 (Glass)
     Freecam cinematográfica + spectate + path + posições salvas + efeitos
 
     NOVIDADES v6.5
@@ -511,7 +511,7 @@ K.str.pt = {
     cam_on = "ATIVAR FREECAM  [P]", cam_off = "DESATIVAR FREECAM  [P]",
     cam_tp = "TELEPORTAR BONECO PRA CÂMERA  [T]", cam_back = "CÂMERA VOLTA PRO BONECO  [G]",
     sec_view = "VISÃO E MOVIMENTO", s_fov = "FOV", s_roll = "Inclinação (graus)",
-    s_speed = "Velocidade da freecam", s_player_speed = "Velocidade do personagem", sec_player_speed = "VELOCIDADE DO PERSONAGEM", t_hide = "Esconder meu boneco [H]", t_stream = "Carregar mapa em volta da câmera",
+    s_speed = "Velocidade da freecam", s_player_speed = "Velocidade do personagem", player_speed_keys = "TECLADO NUMÉRICO: INS/0 +1 | DEL/. -1", sec_player_speed = "VELOCIDADE DO PERSONAGEM", t_hide = "Esconder meu boneco [H]", t_stream = "Carregar mapa em volta da câmera",
     cam_goto = "IR PARA POSIÇÃO SALVA (teclas 1-5)", cam_save = "SALVAR POSIÇÃO AQUI (CTRL + 1-5)",
     sec_help = "CONTROLES",
     cam_help = "WASD mover | Q/E descer/subir | SHIFT lento | ESPAÇO rápido\nRMB olhar | SCROLL zoom | CTRL+SCROLL velocidade | Z/C inclinar\nT teleporte | G câmera->boneco | H esconder boneco | R resetar\nV/[ ] spectate | K/L path | X parar | RShift esconde o menu",
@@ -554,7 +554,7 @@ K.str.en = {
     cam_on = "ENABLE FREECAM  [P]", cam_off = "DISABLE FREECAM  [P]",
     cam_tp = "TELEPORT CHARACTER TO CAMERA  [T]", cam_back = "CAMERA BACK TO CHARACTER  [G]",
     sec_view = "VIEW & MOVEMENT", s_fov = "FOV", s_roll = "Tilt (degrees)",
-    s_speed = "Freecam speed", s_player_speed = "Character speed", sec_player_speed = "CHARACTER SPEED", t_hide = "Hide my character [H]", t_stream = "Load map around the camera",
+    s_speed = "Freecam speed", s_player_speed = "Character speed", player_speed_keys = "NUMPAD: INS/0 +1 | DEL/. -1", sec_player_speed = "CHARACTER SPEED", t_hide = "Hide my character [H]", t_stream = "Load map around the camera",
     cam_goto = "GO TO SAVED POSITION (keys 1-5)", cam_save = "SAVE POSITION HERE (CTRL + 1-5)",
     sec_help = "CONTROLS",
     cam_help = "WASD move | Q/E down/up | SHIFT slow | SPACE fast\nRMB look | SCROLL zoom | CTRL+SCROLL speed | Z/C tilt\nT teleport | G camera->character | H hide character | R reset\nV/[ ] spectate | K/L path | X stop | RShift hides the menu",
@@ -597,7 +597,7 @@ K.str.ru = {
     cam_on = "ВКЛЮЧИТЬ ФРИКАМ  [P]", cam_off = "ВЫКЛЮЧИТЬ ФРИКАМ  [P]",
     cam_tp = "ТЕЛЕПОРТ ПЕРСОНАЖА К КАМЕРЕ  [T]", cam_back = "КАМЕРА К ПЕРСОНАЖУ  [G]",
     sec_view = "ОБЗОР И ДВИЖЕНИЕ", s_fov = "Угол обзора (FOV)", s_roll = "Наклон (градусы)",
-    s_speed = "Скорость freecam", s_player_speed = "Скорость персонажа", sec_player_speed = "СКОРОСТЬ ПЕРСОНАЖА", t_hide = "Скрыть моего персонажа [H]", t_stream = "Подгружать карту вокруг камеры",
+    s_speed = "Скорость freecam", s_player_speed = "Скорость персонажа", player_speed_keys = "NUMPAD: INS/0 +1 | DEL/. -1", sec_player_speed = "СКОРОСТЬ ПЕРСОНАЖА", t_hide = "Скрыть моего персонажа [H]", t_stream = "Подгружать карту вокруг камеры",
     cam_goto = "К СОХРАНЁННОЙ ПОЗИЦИИ (клавиши 1-5)", cam_save = "СОХРАНИТЬ ПОЗИЦИЮ (CTRL + 1-5)",
     sec_help = "УПРАВЛЕНИЕ",
     cam_help = "WASD движение | Q/E вниз/вверх | SHIFT медленно | ПРОБЕЛ быстро\nПКМ осмотр | КОЛЕСО зум | CTRL+КОЛЕСО скорость | Z/C наклон\nT телепорт | G камера->персонаж | H скрыть персонажа | R сброс\nV/[ ] наблюдение | K/L путь | X стоп | RShift скрыть/показать меню",
@@ -640,7 +640,7 @@ K.str.es = {
     cam_on = "ACTIVAR FREECAM  [P]", cam_off = "DESACTIVAR FREECAM  [P]",
     cam_tp = "TELEPORTAR PERSONAJE A LA CÁMARA  [T]", cam_back = "CÁMARA VUELVE AL PERSONAJE  [G]",
     sec_view = "VISTA Y MOVIMIENTO", s_fov = "FOV", s_roll = "Inclinación (grados)",
-    s_speed = "Velocidad de la freecam", s_player_speed = "Velocidad del personaje", sec_player_speed = "VELOCIDAD DEL PERSONAJE", t_hide = "Ocultar mi personaje [H]", t_stream = "Cargar mapa alrededor de la cámara",
+    s_speed = "Velocidad de la freecam", s_player_speed = "Velocidad del personaje", player_speed_keys = "TECLADO NUMÉRICO: INS/0 +1 | DEL/. -1", sec_player_speed = "VELOCIDAD DEL PERSONAJE", t_hide = "Ocultar mi personaje [H]", t_stream = "Cargar mapa alrededor de la cámara",
     cam_goto = "IR A POSICIÓN GUARDADA (teclas 1-5)", cam_save = "GUARDAR POSICIÓN AQUÍ (CTRL + 1-5)",
     sec_help = "CONTROLES",
     cam_help = "WASD mover | Q/E bajar/subir | SHIFT lento | ESPACIO rápido\nClic der. mirar | RUEDA zoom | CTRL+RUEDA velocidad | Z/C inclinar\nT teletransporte | G cámara->personaje | H ocultar personaje | R reiniciar\nV/[ ] espectear | K/L ruta | X parar | RShift oculta el menú",
@@ -683,7 +683,7 @@ K.str.fr = {
     cam_on = "ACTIVER LA FREECAM  [P]", cam_off = "DÉSACTIVER LA FREECAM  [P]",
     cam_tp = "TÉLÉPORTER LE PERSO À LA CAMÉRA  [T]", cam_back = "CAMÉRA VERS LE PERSO  [G]",
     sec_view = "VUE ET MOUVEMENT", s_fov = "FOV", s_roll = "Inclinaison (degrés)",
-    s_speed = "Vitesse de la freecam", s_player_speed = "Vitesse du personnage", sec_player_speed = "VITESSE DU PERSONNAGE", t_hide = "Cacher mon personnage [H]", t_stream = "Charger la carte autour de la caméra",
+    s_speed = "Vitesse de la freecam", s_player_speed = "Vitesse du personnage", player_speed_keys = "PAVÉ NUMÉRIQUE : INS/0 +1 | DEL/. -1", sec_player_speed = "VITESSE DU PERSONNAGE", t_hide = "Cacher mon personnage [H]", t_stream = "Charger la carte autour de la caméra",
     cam_goto = "ALLER À UNE POSITION SAUVEGARDÉE (touches 1-5)", cam_save = "SAUVEGARDER LA POSITION (CTRL + 1-5)",
     sec_help = "COMMANDES",
     cam_help = "WASD bouger | Q/E descendre/monter | SHIFT lent | ESPACE rapide\nClic droit regarder | MOLETTE zoom | CTRL+MOLETTE vitesse | Z/C incliner\nT téléporter | G caméra->perso | H cacher perso | R réinitialiser\nV/[ ] spectateur | K/L trajet | X arrêter | RShift masque le menu",
@@ -726,7 +726,7 @@ K.str.de = {
     cam_on = "FREECAM AKTIVIEREN  [P]", cam_off = "FREECAM DEAKTIVIEREN  [P]",
     cam_tp = "FIGUR ZUR KAMERA TELEPORTIEREN  [T]", cam_back = "KAMERA ZURÜCK ZUR FIGUR  [G]",
     sec_view = "SICHT & BEWEGUNG", s_fov = "FOV", s_roll = "Neigung (Grad)",
-    s_speed = "Freecam-Geschwindigkeit", s_player_speed = "Figurgeschwindigkeit", sec_player_speed = "FIGURGESCHWINDIGKEIT", t_hide = "Meine Figur verstecken [H]", t_stream = "Karte um die Kamera laden",
+    s_speed = "Freecam-Geschwindigkeit", s_player_speed = "Figurgeschwindigkeit", player_speed_keys = "ZIFFERNBLOCK: INS/0 +1 | ENTF/. -1", sec_player_speed = "FIGURGESCHWINDIGKEIT", t_hide = "Meine Figur verstecken [H]", t_stream = "Karte um die Kamera laden",
     cam_goto = "ZU GESPEICHERTER POSITION (Tasten 1-5)", cam_save = "POSITION HIER SPEICHERN (STRG + 1-5)",
     sec_help = "STEUERUNG",
     cam_help = "WASD bewegen | Q/E runter/hoch | SHIFT langsam | LEERTASTE schnell\nRMT umsehen | MAUSRAD Zoom | STRG+MAUSRAD Tempo | Z/C neigen\nT teleportieren | G Kamera->Figur | H Figur verstecken | R zurücksetzen\nV/[ ] zuschauen | K/L Pfad | X stoppen | RShift blendet Menü aus/ein",
@@ -769,7 +769,7 @@ K.str.zh = {
     cam_on = "开启自由相机  [P]", cam_off = "关闭自由相机  [P]",
     cam_tp = "将角色传送到相机  [T]", cam_back = "相机回到角色  [G]",
     sec_view = "视角与移动", s_fov = "视野 (FOV)", s_roll = "倾斜 (度)",
-    s_speed = "自由镜头速度", s_player_speed = "角色速度", sec_player_speed = "角色速度", t_hide = "隐藏我的角色 [H]", t_stream = "加载相机周围的地图",
+    s_speed = "自由镜头速度", s_player_speed = "角色速度", player_speed_keys = "数字键盘：Ins/0 +1 | Del/. -1", sec_player_speed = "角色速度", t_hide = "隐藏我的角色 [H]", t_stream = "加载相机周围的地图",
     cam_goto = "前往已保存位置 (按键 1-5)", cam_save = "在此保存位置 (CTRL + 1-5)",
     sec_help = "操作说明",
     cam_help = "WASD 移动 | Q/E 下降/上升 | SHIFT 慢速 | 空格 快速\n右键 环视 | 滚轮 缩放 | CTRL+滚轮 速度 | Z/C 倾斜\nT 传送 | G 相机->角色 | H 隐藏角色 | R 重置\nV/[ ] 观战 | K/L 路径 | X 停止 | RShift 显示/隐藏菜单",
@@ -812,7 +812,7 @@ K.str.ja = {
     cam_on = "フリーカメラ ON  [P]", cam_off = "フリーカメラ OFF  [P]",
     cam_tp = "キャラをカメラへテレポート  [T]", cam_back = "カメラをキャラに戻す  [G]",
     sec_view = "視点と移動", s_fov = "視野角 (FOV)", s_roll = "傾き (度)",
-    s_speed = "フリーカメラ速度", s_player_speed = "キャラクター速度", sec_player_speed = "キャラクター速度", t_hide = "自分のキャラを隠す [H]", t_stream = "カメラ周辺のマップを読み込む",
+    s_speed = "フリーカメラ速度", s_player_speed = "キャラクター速度", player_speed_keys = "テンキー: Ins/0 +1 | Del/. -1", sec_player_speed = "キャラクター速度", t_hide = "自分のキャラを隠す [H]", t_stream = "カメラ周辺のマップを読み込む",
     cam_goto = "保存位置へ移動 (キー 1-5)", cam_save = "ここに位置を保存 (CTRL + 1-5)",
     sec_help = "操作方法",
     cam_help = "WASD 移動 | Q/E 下降/上昇 | SHIFT 低速 | SPACE 高速\n右クリック 視点 | スクロール ズーム | CTRL+スクロール 速度 | Z/C 傾き\nT テレポート | G カメラ->キャラ | H キャラ非表示 | R リセット\nV/[ ] 観戦 | K/L パス | X 停止 | RShift メニュー表示切替",
@@ -982,6 +982,18 @@ local function getInitialPlayerWalkSpeed()
     local humanoid = character and character:FindFirstChildOfClass("Humanoid")
     local current = humanoid and humanoid.WalkSpeed or 16
     return math.clamp(current, 0, 100)
+end
+
+local function adjustPlayerWalkSpeed(delta)
+    local current = getInitialPlayerWalkSpeed()
+    playerWalkSpeed = math.clamp(current + delta, 0, 100)
+    K.prefs.playerWalkSpeed = playerWalkSpeed
+
+    if ui.playerSpeedSlider then
+        ui.playerSpeedSlider.set(playerWalkSpeed, true)
+    end
+
+    applyPlayerWalkSpeed()
 end
 
 local function T(key, ...)
@@ -2411,6 +2423,7 @@ do
         K.prefs.playerWalkSpeed = value
         applyPlayerWalkSpeed()
     end)
+    newLabel(pageCamera, "player_speed_keys", "sub", 10)
 
     -- Se já existe uma preferência salva, aplica ao personagem atual ao iniciar.
     if playerWalkSpeed ~= nil then
@@ -3929,8 +3942,19 @@ table.insert(connections, UIS.InputBegan:Connect(function(input, processed)
         return
     end
 
-    if processed then return end
     if UIS:GetFocusedTextBox() then return end
+
+    -- Velocidade do personagem: teclas dedicadas e equivalentes do numpad
+    -- (com NumLock ativo: KeypadZero / KeypadPeriod).
+    if input.KeyCode == Enum.KeyCode.Insert or input.KeyCode == Enum.KeyCode.KeypadZero then
+        adjustPlayerWalkSpeed(1)
+        return
+    elseif input.KeyCode == Enum.KeyCode.Delete or input.KeyCode == Enum.KeyCode.KeypadPeriod then
+        adjustPlayerWalkSpeed(-1)
+        return
+    end
+
+    if processed then return end
 
     if input.KeyCode == TOGGLE_KEY then
         setFreecam(not active)
