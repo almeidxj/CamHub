@@ -1,7 +1,12 @@
 --[[
     CamHub
-    XENO FREECAM STUDIO v6.3  |  HUD v3 (Glass)
+    XENO FREECAM STUDIO v6.4  |  HUD v3 (Glass)
     Freecam cinematográfica + spectate + path + posições salvas + efeitos
+
+    NOVIDADES v6.4
+    - Adicionado controle visível de VELOCIDADE DO PERSONAGEM na aba CÂMERA.
+    - Slider de 0 a 100 com valor numérico e preferência salva entre execuções.
+    - Velocidade reaplicada após renascer e restaurada ao fechar/reexecutar.
 
     NOVIDADES v6.3
     - Corrigido: mouse travado no centro da tela (como shiftlock) depois de teleportar.
@@ -32,7 +37,7 @@
     HUD v3: visual "glass" com gradientes, borda animada e cantos redondos.
     Aba CONFIG com idioma e 6 temas (vermelho, monocromático, neon, vidro, oceano, floresta).
     Aba EFEITOS: controles de efeitos visuais da câmera.
-    Idioma, tema, posição do menu, velocidade, sensibilidade, posições salvas
+    Idioma, tema, posição do menu, velocidades da câmera/personagem, sensibilidade, posições salvas
     (1-5) e pontos do path ficam salvos se você executar o script de novo.
 ]]
 
@@ -89,8 +94,3 @@ local MINI_HEIGHT = HEADER_H
 local DEFAULT_MENU_POS = { 25, 110 }
 
 ---------------------------------------------------------------------
--- ESTADO
----------------------------------------------------------------------
-local active = false
-local minimized = false
-local lookHeld = false
