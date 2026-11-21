@@ -1,6 +1,6 @@
 --[[
     CamHub
-    XENO FREECAM STUDIO v6.0  |  HUD v3 (Glass)
+    XENO FREECAM STUDIO v6.1  |  HUD v3 (Glass)
     Freecam cinematográfica + spectate + path + posições salvas + efeitos
 
     CONTROLES (com a freecam ativa)
@@ -35,6 +35,7 @@ local StarterGui = game:GetService("StarterGui")
 local ContextActionService = game:GetService("ContextActionService")
 local Lighting = game:GetService("Lighting")
 local TweenService = game:GetService("TweenService")
+local TeleportService = game:GetService("TeleportService")
 
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
@@ -830,14 +831,14 @@ K.str.ja = {
 -- textos extras e nomes de temas (adicionados aos pacotes de idioma)
 do
     local extra = {
-        pt = { s_sens = "Sensibilidade do mouse", s_smooth = "Suavidade da câmera", s_rays = "Raios de sol", s_vignette = "Vinheta", th_neon = "NEON (CIANO / ROXO)", th_ocean = "OCEANO", th_forest = "FLORESTA" },
-        en = { s_sens = "Mouse sensitivity", s_smooth = "Camera smoothness", s_rays = "Sun rays", s_vignette = "Vignette", th_neon = "NEON (CYAN / PURPLE)", th_ocean = "OCEAN", th_forest = "FOREST" },
-        ru = { s_sens = "Чувствительность мыши", s_smooth = "Плавность камеры", s_rays = "Солнечные лучи", s_vignette = "Виньетка", th_neon = "НЕОН (ЦИАН / ФИОЛЕТОВЫЙ)", th_ocean = "ОКЕАН", th_forest = "ЛЕС" },
-        es = { s_sens = "Sensibilidad del ratón", s_smooth = "Suavidad de la cámara", s_rays = "Rayos de sol", s_vignette = "Viñeta", th_neon = "NEÓN (CIAN / MORADO)", th_ocean = "OCÉANO", th_forest = "BOSQUE" },
-        fr = { s_sens = "Sensibilité de la souris", s_smooth = "Fluidité de la caméra", s_rays = "Rayons du soleil", s_vignette = "Vignette", th_neon = "NÉON (CYAN / VIOLET)", th_ocean = "OCÉAN", th_forest = "FORÊT" },
-        de = { s_sens = "Mausempfindlichkeit", s_smooth = "Kameraglättung", s_rays = "Sonnenstrahlen", s_vignette = "Vignette", th_neon = "NEON (CYAN / LILA)", th_ocean = "OZEAN", th_forest = "WALD" },
-        zh = { s_sens = "镜头灵敏度", s_smooth = "镜头平滑度", s_rays = "阳光光束", s_vignette = "暗角", th_neon = "霓虹 (青 / 紫)", th_ocean = "海洋", th_forest = "森林" },
-        ja = { s_sens = "マウス感度", s_smooth = "カメラのなめらかさ", s_rays = "太陽光線", s_vignette = "ビネット", th_neon = "ネオン (シアン / 紫)", th_ocean = "オーシャン", th_forest = "フォレスト" },
+        pt = { s_sens = "Sensibilidade do mouse", s_smooth = "Suavidade da câmera", s_rays = "Raios de sol", s_vignette = "Vinheta", th_neon = "NEON (CIANO / ROXO)", th_ocean = "OCEANO", th_forest = "FLORESTA" , cfg_rejoin = "REENTRAR NO MESMO SERVIDOR", n_rejoining = "REENTRANDO NO SERVIDOR ATUAL...", n_rejoin_failed = "NÃO FOI POSSÍVEL REENTRAR NESTE SERVIDOR"},
+        en = { s_sens = "Mouse sensitivity", s_smooth = "Camera smoothness", s_rays = "Sun rays", s_vignette = "Vignette", th_neon = "NEON (CYAN / PURPLE)", th_ocean = "OCEAN", th_forest = "FOREST" , cfg_rejoin = "REJOIN THIS SERVER", n_rejoining = "REJOINING THIS SERVER...", n_rejoin_failed = "COULD NOT REJOIN THIS SERVER"},
+        ru = { s_sens = "Чувствительность мыши", s_smooth = "Плавность камеры", s_rays = "Солнечные лучи", s_vignette = "Виньетка", th_neon = "НЕОН (ЦИАН / ФИОЛЕТОВЫЙ)", th_ocean = "ОКЕАН", th_forest = "ЛЕС" , cfg_rejoin = "ПЕРЕЗАЙТИ НА ЭТОТ СЕРВЕР", n_rejoining = "ПОВТОРНЫЙ ВХОД НА СЕРВЕР...", n_rejoin_failed = "НЕ УДАЛОСЬ ПОДКЛЮЧИТЬСЯ К ЭТОМУ СЕРВЕРУ"},
+        es = { s_sens = "Sensibilidad del ratón", s_smooth = "Suavidad de la cámara", s_rays = "Rayos de sol", s_vignette = "Viñeta", th_neon = "NEÓN (CIAN / MORADO)", th_ocean = "OCÉANO", th_forest = "BOSQUE" , cfg_rejoin = "VOLVER A ESTE SERVIDOR", n_rejoining = "VOLVIENDO A ESTE SERVIDOR...", n_rejoin_failed = "NO SE PUDO VOLVER A ESTE SERVIDOR"},
+        fr = { s_sens = "Sensibilité de la souris", s_smooth = "Fluidité de la caméra", s_rays = "Rayons du soleil", s_vignette = "Vignette", th_neon = "NÉON (CYAN / VIOLET)", th_ocean = "OCÉAN", th_forest = "FORÊT" , cfg_rejoin = "REJOINDRE CE SERVEUR", n_rejoining = "RECONNEXION AU SERVEUR...", n_rejoin_failed = "IMPOSSIBLE DE REJOINDRE CE SERVEUR"},
+        de = { s_sens = "Mausempfindlichkeit", s_smooth = "Kameraglättung", s_rays = "Sonnenstrahlen", s_vignette = "Vignette", th_neon = "NEON (CYAN / LILA)", th_ocean = "OZEAN", th_forest = "WALD" , cfg_rejoin = "DIESEM SERVER ERNEUT BEITRETEN", n_rejoining = "VERBINDE ERNEUT MIT DIESEM SERVER...", n_rejoin_failed = "SERVER-NEUVERBINDUNG FEHLGESCHLAGEN"},
+        zh = { s_sens = "镜头灵敏度", s_smooth = "镜头平滑度", s_rays = "阳光光束", s_vignette = "暗角", th_neon = "霓虹 (青 / 紫)", th_ocean = "海洋", th_forest = "森林" , cfg_rejoin = "重新加入此服务器", n_rejoining = "正在重新加入服务器...", n_rejoin_failed = "无法重新加入此服务器"},
+        ja = { s_sens = "マウス感度", s_smooth = "カメラのなめらかさ", s_rays = "太陽光線", s_vignette = "ビネット", th_neon = "ネオン (シアン / 紫)", th_ocean = "オーシャン", th_forest = "フォレスト" , cfg_rejoin = "同じサーバーに再参加", n_rejoining = "サーバーに再接続中...", n_rejoin_failed = "サーバーに再接続できませんでした"},
     }
 
     for code, entries in pairs(extra) do
@@ -2123,6 +2124,16 @@ do
     )
     minimizeButton.setRaw("-")
 
+    local closeButton = buildButton(
+        header,
+        UDim2.fromOffset(36, 28),
+        UDim2.new(1, -88, 0, 10),
+        nil,
+        false,
+        18
+    )
+    closeButton.setRaw("×")
+
     onTheme(function()
         title.TextColor3 = C.text
 
@@ -2748,6 +2759,22 @@ do
         end
     end)
 
+    newButton(pageCfg, "cfg_rejoin", 34, function()
+        if game.JobId == "" then
+            ui.toast(T("n_rejoin_failed"))
+            return
+        end
+
+        ui.toast(T("n_rejoining"))
+        local ok = pcall(function()
+            TeleportService:TeleportToPlaceInstance(game.PlaceId, game.JobId, player)
+        end)
+
+        if not ok then
+            ui.toast(T("n_rejoin_failed"))
+        end
+    end, true)
+
     newButton(pageCfg, "cfg_reset", 32, function()
         main.Position = UDim2.fromOffset(DEFAULT_MENU_POS[1], DEFAULT_MENU_POS[2])
         K.prefs.menuPos = { DEFAULT_MENU_POS[1], DEFAULT_MENU_POS[2] }
@@ -2757,7 +2784,7 @@ do
 
     do
         local about = newLabel(pageCfg, nil, "sub", 10)
-        about.Text = "CamHub // XENO FREECAM STUDIO v6.0\nHUD v3 (Glass)"
+        about.Text = "CamHub // XENO FREECAM STUDIO v6.1\nHUD v3 (Glass)"
     end
 
     -----------------------------------------------------------------
@@ -2815,6 +2842,16 @@ do
             end
 
             activeSlider = nil
+        end
+    end))
+
+    table.insert(connections, closeButton.gui.MouseButton1Click:Connect(function()
+        local cleanup = env.CAMHUB_FREECAM_CLEANUP
+        if type(cleanup) == "function" then
+            pcall(cleanup)
+        else
+            pcall(function() gui:Destroy() end)
+            pcall(function() fxGui:Destroy() end)
         end
     end))
 
@@ -4038,6 +4075,12 @@ end
 table.insert(connections, Players.PlayerAdded:Connect(ui.addPlayerButton))
 table.insert(connections, Players.PlayerRemoving:Connect(ui.removePlayerButton))
 
+table.insert(connections, TeleportService.TeleportInitFailed:Connect(function(failedPlayer)
+    if failedPlayer == player and ui.toast then
+        ui.toast(T("n_rejoin_failed"))
+    end
+end))
+
 ---------------------------------------------------------------------
 -- LIMPEZA
 ---------------------------------------------------------------------
@@ -4091,4 +4134,4 @@ refreshSlotButtons()
 ui.showTab(1)
 refreshStatus()
 
-print("[CamHub] XENO FREECAM STUDIO v6.0 CARREGADA")
+print("[CamHub] XENO FREECAM STUDIO v6.1 CARREGADA")
