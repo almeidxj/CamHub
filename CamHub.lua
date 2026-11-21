@@ -1,7 +1,13 @@
 --[[
     CamHub
-    XENO FREECAM STUDIO v6.5.2  |  HUD v3 (Glass)
-    Freecam cinematográfica + spectate + path + posições salvas + efeitos
+    XENO FREECAM STUDIO v6.6  |  HUD v3 (Glass)
+    Freecam cinematográfica + spectate + path + posições salvas + efeitos + aimbot
+
+    NOVIDADES v6.6
+    - Nova categoria AIMBOT com assistência de mira na câmera normal.
+    - Seleção de cabeça/corpo, FOV, suavidade e distância máxima.
+    - Opções de segurar RMB, verificar time e visibilidade.
+    - Preferências do aimbot salvas entre execuções.
 
     NOVIDADES v6.5
     - Corrigido: ao sair da freecam com Shift Lock ativo, o mouse não fica preso no centro.
@@ -167,6 +173,18 @@ local troll = {
     rainbow = false, lag = false, stalk = false,
     intensity = 1,
     angle = 0, scareT = 0, lagTimer = 0, lagCF = nil,
+}
+
+-- Assistência de mira local: altera somente a orientação da câmera do cliente.
+local aimbot = {
+    enabled = false,
+    holdToAim = true,
+    teamCheck = false,
+    visibleCheck = true,
+    targetPart = "Head", -- Head | HumanoidRootPart
+    fov = 180,            -- raio em pixels a partir do centro da tela
+    smoothness = 14,
+    maxDistance = 1500,
 }
 
 -- streaming: pede ao servidor pra carregar o mapa em volta da câmera /
@@ -890,6 +908,35 @@ do
     end
 end
 
+-- textos da categoria AIMBOT (idiomas sem tradução específica usam inglês)
+K.str.pt.tab_aim = "AIMBOT"
+K.str.pt.aim_hint = "Assistência local da câmera. Segure o botão direito para mirar quando essa opção estiver ativa."
+K.str.pt.sec_aim_settings = "CONFIGURAÇÕES DE MIRA"
+K.str.pt.t_aim_enabled = "Ativar aimbot"
+K.str.pt.t_aim_hold = "Exigir botão direito para mirar"
+K.str.pt.t_aim_team = "Ignorar jogadores do mesmo time"
+K.str.pt.t_aim_visible = "Verificar se o alvo está visível"
+K.str.pt.s_aim_fov = "FOV (raio em pixels)"
+K.str.pt.s_aim_smooth = "Suavidade da mira"
+K.str.pt.s_aim_distance = "Distância máxima"
+K.str.pt.aim_target_part = "PARTE-ALVO"
+K.str.pt.aim_head = "CABEÇA"
+K.str.pt.aim_body = "CORPO"
+
+K.str.en.tab_aim = "AIMBOT"
+K.str.en.aim_hint = "Local camera aim assistance. Hold right mouse button to aim when enabled."
+K.str.en.sec_aim_settings = "AIM SETTINGS"
+K.str.en.t_aim_enabled = "Enable aimbot"
+K.str.en.t_aim_hold = "Hold right mouse button to aim"
+K.str.en.t_aim_team = "Ignore teammates"
+K.str.en.t_aim_visible = "Visibility check"
+K.str.en.s_aim_fov = "FOV (pixel radius)"
+K.str.en.s_aim_smooth = "Aim smoothness"
+K.str.en.s_aim_distance = "Maximum distance"
+K.str.en.aim_target_part = "TARGET PART"
+K.str.en.aim_head = "HEAD"
+K.str.en.aim_body = "BODY"
+
 -- preferências (sobrevivem a re-execuções do script)
 do
     local prefs = env.CAMHUB_FREECAM_PREFS
@@ -938,6 +985,21 @@ do
     if type(prefs.smooth) == "number" then
         rotationSmooth = math.clamp(prefs.smooth, 2, 24)
     end
+
+    if type(prefs.aimbot) ~= "table" then
+        prefs.aimbot = {}
+    end
+    local aimPrefs = prefs.aimbot
+    if type(aimPrefs.enabled) == "boolean" then aimbot.enabled = aimPrefs.enabled end
+    if type(aimPrefs.holdToAim) == "boolean" then aimbot.holdToAim = aimPrefs.holdToAim end
+    if type(aimPrefs.teamCheck) == "boolean" then aimbot.teamCheck = aimPrefs.teamCheck end
+    if type(aimPrefs.visibleCheck) == "boolean" then aimbot.visibleCheck = aimPrefs.visibleCheck end
+    if aimPrefs.targetPart == "Head" or aimPrefs.targetPart == "HumanoidRootPart" then
+        aimbot.targetPart = aimPrefs.targetPart
+    end
+    if type(aimPrefs.fov) == "number" then aimbot.fov = math.clamp(aimPrefs.fov, 40, 500) end
+    if type(aimPrefs.smoothness) == "number" then aimbot.smoothness = math.clamp(aimPrefs.smoothness, 1, 30) end
+    if type(aimPrefs.maxDistance) == "number" then aimbot.maxDistance = math.clamp(aimPrefs.maxDistance, 100, 3000) end
 
     for key, value in pairs(K.themes[K.theme]) do
         C[key] = value
@@ -2351,10 +2413,11 @@ do
     local pagePath = newPage()
     local pageFx = newPage()
     local pageTroll = pageFx
+    local pageAimbot = newPage()
     local pageCfg = newPage()
 
     do
-        local tabKeys = { "tab_camera", "tab_spect", "tab_path", "tab_fx", "tab_cfg" }
+        local tabKeys = { "tab_camera", "tab_spect", "tab_path", "tab_fx", "tab_aim", "tab_cfg" }
 
         for index, key in ipairs(tabKeys) do
             local obj = buildButton(
@@ -2786,6 +2849,61 @@ do
     end, true)
 
     -----------------------------------------------------------------
+    -- ABA: AIMBOT
+    -----------------------------------------------------------------
+    newLabel(pageAimbot, "aim_hint", "sub", 10)
+    newSection(pageAimbot, "sec_aim_settings")
+
+    ui.aimEnabledToggle = newToggle(pageAimbot, "t_aim_enabled", aimbot.enabled, function(state)
+        aimbot.enabled = state
+        K.prefs.aimbot.enabled = state
+    end)
+
+    ui.aimHoldToggle = newToggle(pageAimbot, "t_aim_hold", aimbot.holdToAim, function(state)
+        aimbot.holdToAim = state
+        K.prefs.aimbot.holdToAim = state
+    end)
+
+    ui.aimTeamToggle = newToggle(pageAimbot, "t_aim_team", aimbot.teamCheck, function(state)
+        aimbot.teamCheck = state
+        K.prefs.aimbot.teamCheck = state
+    end)
+
+    ui.aimVisibleToggle = newToggle(pageAimbot, "t_aim_visible", aimbot.visibleCheck, function(state)
+        aimbot.visibleCheck = state
+        K.prefs.aimbot.visibleCheck = state
+    end)
+
+    ui.aimFovSlider = newSlider(pageAimbot, "s_aim_fov", 40, 500, aimbot.fov, 5, "%.0f", function(value)
+        aimbot.fov = value
+        K.prefs.aimbot.fov = value
+    end)
+
+    ui.aimSmoothSlider = newSlider(pageAimbot, "s_aim_smooth", 1, 30, aimbot.smoothness, 1, "%.0f", function(value)
+        aimbot.smoothness = value
+        K.prefs.aimbot.smoothness = value
+    end)
+
+    ui.aimDistanceSlider = newSlider(pageAimbot, "s_aim_distance", 100, 3000, aimbot.maxDistance, 50, "%.0f", function(value)
+        aimbot.maxDistance = value
+        K.prefs.aimbot.maxDistance = value
+    end)
+
+    newSection(pageAimbot, "aim_target_part")
+    ui.aimPartButtons = newRow(pageAimbot, 30, {
+        { key = "aim_head" },
+        { key = "aim_body" },
+    }, function(index)
+        aimbot.targetPart = index == 1 and "Head" or "HumanoidRootPart"
+        K.prefs.aimbot.targetPart = aimbot.targetPart
+        for buttonIndex, button in ipairs(ui.aimPartButtons) do
+            button.setSelected(buttonIndex == index)
+        end
+    end, 10)
+    ui.aimPartButtons[1].setSelected(aimbot.targetPart == "Head")
+    ui.aimPartButtons[2].setSelected(aimbot.targetPart == "HumanoidRootPart")
+
+    -----------------------------------------------------------------
     -- ABA: CONFIG (idioma e tema)
     -----------------------------------------------------------------
     newSection(pageCfg, "cfg_lang")
@@ -2878,7 +2996,7 @@ do
 
     do
         local about = newLabel(pageCfg, nil, "sub", 10)
-        about.Text = "CamHub // XENO FREECAM STUDIO v6.4\nHUD v3 (Glass)"
+        about.Text = "CamHub // XENO FREECAM STUDIO v6.6\nHUD v3 (Glass)"
     end
 
     -----------------------------------------------------------------
@@ -4013,6 +4131,80 @@ table.insert(connections, UIS.InputChanged:Connect(function(input, processed)
 end))
 
 ---------------------------------------------------------------------
+-- AIMBOT: SELEÇÃO DE ALVO E ASSISTÊNCIA LOCAL DA CÂMERA
+---------------------------------------------------------------------
+local function findAimbotTarget(cameraObject)
+    if not aimbot.enabled then return nil end
+    if aimbot.holdToAim and not UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
+        return nil
+    end
+    if UIS:GetFocusedTextBox() then return nil end
+
+    local viewport = cameraObject.ViewportSize
+    if viewport.X <= 0 or viewport.Y <= 0 then return nil end
+
+    local screenCenter = Vector2.new(viewport.X * 0.5, viewport.Y * 0.5)
+    local cameraOrigin = cameraObject.CFrame.Position
+    local rayParams = RaycastParams.new()
+    rayParams.FilterType = Enum.RaycastFilterType.Exclude
+    rayParams.FilterDescendantsInstances = { player.Character }
+    rayParams.IgnoreWater = true
+
+    local bestPart = nil
+    local bestScreenDistance = aimbot.fov
+
+    for _, targetPlayer in ipairs(Players:GetPlayers()) do
+        if targetPlayer ~= player then
+            local sameTeam = player.Team ~= nil and targetPlayer.Team == player.Team
+            if not (aimbot.teamCheck and sameTeam) then
+                local character = targetPlayer.Character
+                local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+                local targetPart = character and character:FindFirstChild(aimbot.targetPart)
+
+                if humanoid and humanoid.Health > 0 and targetPart and targetPart:IsA("BasePart") then
+                    local offset = targetPart.Position - cameraOrigin
+                    local worldDistance = offset.Magnitude
+
+                    if worldDistance <= aimbot.maxDistance and worldDistance > 0.05 then
+                        local screenPoint, onScreen = cameraObject:WorldToViewportPoint(targetPart.Position)
+                        if onScreen and screenPoint.Z > 0 then
+                            local screenDistance = (Vector2.new(screenPoint.X, screenPoint.Y) - screenCenter).Magnitude
+
+                            if screenDistance <= bestScreenDistance then
+                                local visible = true
+                                if aimbot.visibleCheck then
+                                    local rayResult = workspace:Raycast(cameraOrigin, offset, rayParams)
+                                    visible = rayResult == nil or rayResult.Instance:IsDescendantOf(character)
+                                end
+
+                                if visible then
+                                    bestScreenDistance = screenDistance
+                                    bestPart = targetPart
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    return bestPart
+end
+
+local function applyAimbot(cameraObject, baseCFrame, dt)
+    local targetPart = findAimbotTarget(cameraObject)
+    if not targetPart then return baseCFrame end
+
+    local offset = targetPart.Position - baseCFrame.Position
+    if offset.Magnitude <= 0.05 then return baseCFrame end
+
+    local targetCFrame = CFrame.lookAt(baseCFrame.Position, targetPart.Position)
+    local alpha = 1 - math.exp(-aimbot.smoothness * dt)
+    return baseCFrame:Lerp(targetCFrame, math.clamp(alpha, 0, 1))
+end
+
+---------------------------------------------------------------------
 -- EFEITOS NA CÂMERA NORMAL DO PERSONAGEM
 ---------------------------------------------------------------------
 -- Este pipeline não ativa a freecam nem muda CameraSubject/CameraType.
@@ -4062,6 +4254,9 @@ RunService:BindToRenderStep(NORMAL_FX_BIND, Enum.RenderPriority.Camera.Value + 1
             baseCF = baseCF:Lerp(lookCF, 1 - math.exp(-8 * dt * math.max(troll.intensity, 0.2)))
         end
     end
+
+    -- Aimbot atua somente na câmera normal; a freecam continua independente.
+    baseCF = applyAimbot(normalCamera, baseCF, dt)
 
     -- Inclinação da aba CÂMERA também funciona sem freecam.
     if math.abs(targetRoll) > 0.0001 then
@@ -4399,4 +4594,4 @@ refreshSlotButtons()
 ui.showTab(1)
 refreshStatus()
 
-print("[CamHub] XENO FREECAM STUDIO v6.4 CARREGADA")
+print("[CamHub] XENO FREECAM STUDIO v6.6 CARREGADA")
