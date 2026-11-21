@@ -1,7 +1,12 @@
 --[[
     CamHub
-    XENO FREECAM STUDIO v6.8  |  HUD v3 (Glass)
+    XENO FREECAM STUDIO v6.9  |  HUD v3 (Glass)
     Freecam cinematográfica + spectate + path + posições salvas + efeitos + aimbot
+
+    NOVIDADES v6.9
+    - Corrigido: o aimbot reconhece o Shift Lock como entrada de mira.
+    - Com Shift Lock ativo, não é necessário segurar RMB mesmo com a opção
+      de exigir RMB habilitada; sem Shift Lock, o comportamento anterior permanece.
 
     NOVIDADES v6.8
     - Tecla Y ativa/desativa o aimbot e sincroniza o botão no HUD.
@@ -916,10 +921,10 @@ end
 
 -- textos da categoria AIMBOT (idiomas sem tradução específica usam inglês)
 K.str.pt.tab_aim = "AIMBOT"
-K.str.pt.aim_hint = "Y ativa/desativa o aimbot. Se a opção RMB estiver ligada, segure o botão direito para mirar."
+K.str.pt.aim_hint = "Y ativa/desativa. Com Shift Lock ativo, ele mira automaticamente; caso contrário, segure RMB se a opção estiver ligada."
 K.str.pt.sec_aim_settings = "CONFIGURAÇÕES DE MIRA"
 K.str.pt.t_aim_enabled = "Ativar aimbot"
-K.str.pt.t_aim_hold = "Exigir botão direito para mirar"
+K.str.pt.t_aim_hold = "Exigir RMB (Shift Lock libera automaticamente)"
 K.str.pt.t_aim_team = "Ignorar jogadores do mesmo time"
 K.str.pt.t_aim_visible = "Verificar se o alvo está visível"
 K.str.pt.s_aim_fov = "FOV (raio em pixels)"
@@ -930,10 +935,10 @@ K.str.pt.aim_head = "CABEÇA"
 K.str.pt.aim_body = "CORPO"
 
 K.str.en.tab_aim = "AIMBOT"
-K.str.en.aim_hint = "Y toggles the aimbot. If RMB mode is enabled, hold right mouse button to aim."
+K.str.en.aim_hint = "Y toggles the aimbot. Shift Lock automatically counts as aim input; otherwise hold RMB if required."
 K.str.en.sec_aim_settings = "AIM SETTINGS"
 K.str.en.t_aim_enabled = "Enable aimbot"
-K.str.en.t_aim_hold = "Hold right mouse button to aim"
+K.str.en.t_aim_hold = "Require RMB (Shift Lock bypasses this)"
 K.str.en.t_aim_team = "Ignore teammates"
 K.str.en.t_aim_visible = "Visibility check"
 K.str.en.s_aim_fov = "FOV (pixel radius)"
@@ -3002,7 +3007,7 @@ do
 
     do
         local about = newLabel(pageCfg, nil, "sub", 10)
-        about.Text = "CamHub // XENO FREECAM STUDIO v6.8\nHUD v3 (Glass)"
+        about.Text = "CamHub // XENO FREECAM STUDIO v6.9\nHUD v3 (Glass)"
     end
 
     -----------------------------------------------------------------
@@ -4147,11 +4152,25 @@ end))
 ---------------------------------------------------------------------
 -- AIMBOT: SELEÇÃO DE ALVO E ASSISTÊNCIA LOCAL DA CÂMERA
 ---------------------------------------------------------------------
+-- O Shift Lock mantém o mouse em LockCenter. Nesse modo, o próprio
+-- estado de Shift Lock serve como entrada de mira, evitando exigir RMB.
+local function isAimbotAimInputActive()
+    if not aimbot.holdToAim then
+        return true
+    end
+
+    local rightMouseHeld = false
+    pcall(function()
+        rightMouseHeld = UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)
+    end)
+
+    local shiftLockActive = UIS.MouseBehavior == Enum.MouseBehavior.LockCenter
+    return rightMouseHeld or shiftLockActive
+end
+
 local function findAimbotTarget(cameraObject)
     if not aimbot.enabled then return nil end
-    if aimbot.holdToAim and not UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
-        return nil
-    end
+    if not isAimbotAimInputActive() then return nil end
     if UIS:GetFocusedTextBox() then return nil end
 
     local viewport = cameraObject.ViewportSize
@@ -4608,4 +4627,4 @@ refreshSlotButtons()
 ui.showTab(1)
 refreshStatus()
 
-print("[CamHub] XENO FREECAM STUDIO v6.8 CARREGADA")
+print("[CamHub] XENO FREECAM STUDIO v6.9 CARREGADA")
