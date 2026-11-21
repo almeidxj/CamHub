@@ -1,7 +1,12 @@
 --[[
     CamHub
-    XENO FREECAM STUDIO v6.1  |  HUD v3 (Glass)
+    XENO FREECAM STUDIO v6.2  |  HUD v3 (Glass)
     Freecam cinematográfica + spectate + path + posições salvas + efeitos
+
+    NOVIDADES v6.2
+    - Corrigido: a HUD do jogo voltava a aparecer depois de respawnar com a freecam ligada.
+    - Corrigido: ao desligar a freecam depois de respawnar, a câmera não voltava pro boneco novo.
+    - Botão de fechar agora fica no lado DIREITO e o de minimizar no lado ESQUERDO.
 
     CONTROLES (com a freecam ativa)
     W/A/S/D ......... mover            Q / E ........... descer / subir
@@ -2114,10 +2119,11 @@ do
         TextTruncate = Enum.TextTruncate.AtEnd,
     }, header)
 
+    -- minimizar fica à ESQUERDA e fechar fica à DIREITA (extremo do cabeçalho)
     local minimizeButton = buildButton(
         header,
         UDim2.fromOffset(36, 28),
-        UDim2.new(1, -48, 0, 10),
+        UDim2.new(1, -88, 0, 10),
         nil,
         false,
         18
@@ -2127,7 +2133,7 @@ do
     local closeButton = buildButton(
         header,
         UDim2.fromOffset(36, 28),
-        UDim2.new(1, -88, 0, 10),
+        UDim2.new(1, -48, 0, 10),
         nil,
         false,
         18
@@ -2784,7 +2790,7 @@ do
 
     do
         local about = newLabel(pageCfg, nil, "sub", 10)
-        about.Text = "CamHub // XENO FREECAM STUDIO v6.1\nHUD v3 (Glass)"
+        about.Text = "CamHub // XENO FREECAM STUDIO v6.2\nHUD v3 (Glass)"
     end
 
     -----------------------------------------------------------------
@@ -2877,6 +2883,7 @@ local hudHidden = false
 local savedScreenGuis = {}
 local savedCoreGuis = {}
 local guiAddedConnection
+local hudTimer = 0
 
 local function hideGameHUD()
 
@@ -2922,6 +2929,41 @@ local function hideGameHUD()
             hideScreenGui(object)
         end
     end)
+end
+
+-- CORREÇÃO v6.2: o jogo reabilita a HUD quando o boneco renasce.
+-- Enquanto a freecam estiver ligada, esta função é chamada várias vezes
+-- por segundo e esconde de novo tudo que o jogo tiver reativado.
+local function enforceGameHUD()
+    if not hudHidden then return end
+
+    for _, coreType in ipairs(Enum.CoreGuiType:GetEnumItems()) do
+        if coreType ~= Enum.CoreGuiType.All then
+            local ok, enabled = pcall(function()
+                return StarterGui:GetCoreGuiEnabled(coreType)
+            end)
+
+            if ok and enabled then
+                if savedCoreGuis[coreType] == nil then
+                    savedCoreGuis[coreType] = true
+                end
+
+                pcall(function()
+                    StarterGui:SetCoreGuiEnabled(coreType, false)
+                end)
+            end
+        end
+    end
+
+    for _, object in ipairs(playerGui:GetChildren()) do
+        if object:IsA("ScreenGui") and object ~= gui and object ~= fxGui and object.Enabled then
+            if savedScreenGuis[object] == nil then
+                savedScreenGuis[object] = true
+            end
+
+            object.Enabled = false
+        end
+    end
 end
 
 local function restoreGameHUD()
@@ -3609,6 +3651,40 @@ end
 ---------------------------------------------------------------------
 -- ATIVAR / DESATIVAR FREECAM
 ---------------------------------------------------------------------
+-- CORREÇÃO v6.2: se o boneco renascer com a freecam ligada, o Humanoid
+-- guardado ao ligar já foi destruído. Aqui a gente descobre qual é o
+-- Humanoid válido na hora de desligar.
+local function resolveCameraSubject()
+    local character = player.Character
+    local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+    local old = oldCameraSubject
+
+    local stillValid = old
+        and old:IsDescendantOf(workspace)
+        and not (old:IsA("Humanoid") and old.Health <= 0)
+
+    if stillValid then
+        return old
+    end
+
+    return humanoid or old
+end
+
+-- guarda o Humanoid novo quando o boneco renasce com a freecam ligada
+table.insert(connections, player.CharacterAdded:Connect(function(newCharacter)
+    local humanoid = newCharacter:WaitForChild("Humanoid", 5)
+
+    if humanoid and active then
+        oldCameraSubject = humanoid
+    end
+
+    -- esconde de novo a HUD que o jogo reabilita no respawn
+    if active then
+        task.wait(0.2)
+        enforceGameHUD()
+    end
+end))
+
 function setFreecam(enabled)
 
     if active == enabled then return end
@@ -3677,8 +3753,10 @@ function setFreecam(enabled)
 
         camera.CameraType = oldCameraType or Enum.CameraType.Custom
 
-        if oldCameraSubject then
-            camera.CameraSubject = oldCameraSubject
+        -- usa o Humanoid atual (o antigo pode ter sido destruído no respawn)
+        local subject = resolveCameraSubject()
+        if subject then
+            camera.CameraSubject = subject
         end
 
         if oldFOV then
@@ -4040,6 +4118,14 @@ table.insert(connections, RunService.RenderStepped:Connect(function(dt)
     -- carrega o mapa em volta da câmera / do player espectado
     streamTick()
 
+    -- mantém a HUD do jogo escondida (o jogo reabilita no respawn)
+    hudTimer += dt
+
+    if hudTimer > 0.15 then
+        hudTimer = 0
+        enforceGameHUD()
+    end
+
     -- manter o boneco escondido (o jogo pode resetar)
     if hideSelf then
         hideTimer += dt
@@ -4134,4 +4220,4 @@ refreshSlotButtons()
 ui.showTab(1)
 refreshStatus()
 
-print("[CamHub] XENO FREECAM STUDIO v6.1 CARREGADA")
+print("[CamHub] XENO FREECAM STUDIO v6.2 CARREGADA")
